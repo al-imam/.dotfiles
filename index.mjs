@@ -2,6 +2,6 @@
 import "zx/globals";
 $.verbose = false;
 
-const files = await $`ls src -a`;
+const files = await $`ls ${__dirname}/src -a`;
 
 echo(files);
