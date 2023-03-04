@@ -1,7 +1,10 @@
 #!/usr/bin/env zx
 import "zx/globals";
+import { globby } from "globby";
 $.verbose = false;
 
-const files = await $`ls ${__dirname}/src -a`;
+cd(`${__dirname}/src`);
 
-echo(files);
+const files = await globby(["."], { dot: true });
+
+echo(JSON.stringify(files, null, 4));
