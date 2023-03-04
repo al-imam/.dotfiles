@@ -10,10 +10,15 @@ cd(`${__dirname}/src`);
 
 const files = await globby(["."], { dot: true });
 
-lnk(files[0], "home")
+lnk(files[0], "home", { overwrite: true })
   .then(() => console.log("done"))
   .catch(async (e) => {
-    await $`mv ${e.dest}{,.bak}}`;
+    // if (files[0].includes("/")) {
+    //   const folderName = files[0].split("/")[0];
+    //   $``;
+    // }
+    await $`mv ${e.dest}{,.bak.${Math.random().toString().split(".")[1]}}`;
+    console.log(e.dest, e.path);
   });
 
 echo(JSON.stringify(files, null, 4));
