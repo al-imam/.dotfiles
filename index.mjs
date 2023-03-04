@@ -8,12 +8,17 @@ cd(`${__dirname}/src`);
 
 const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
-folders.map((n, i) => {
+const arrayOfFiles = folders.reduce((accumulator, currentValue) => {
   within(async () => {
-    cd(n);
+    cd(currentValue);
     const files = await globby(".", { dot: true });
     const index = files.indexOf("drop.txt");
     const { stdout: location } = await $`cat ${files.at(index)}`;
-    console.log(files, location);
+    accumulator[currentValue] = {
+      files: files.filter((e) => e !== "drop.txt"),
+      location,
+    };
+    console.log(accumulator);
   });
-});
+  return accumulator;
+}, {});
