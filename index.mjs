@@ -2,4 +2,6 @@
 import "zx/globals";
 $.verbose = false;
 
-await $`echo "Hello World"`;
+const files = await $`ls src -a`;
+
+echo(files);
