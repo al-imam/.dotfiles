@@ -23,4 +23,6 @@ for (const name of folders)
     });
   });
 
-console.log(configurations);
+async function link(items, location) {
+  await lnk(items, location, { parents: true, type: "symbolic" });
+}
