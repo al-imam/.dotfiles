@@ -1,0 +1,1 @@
+alias console.log="echo"
