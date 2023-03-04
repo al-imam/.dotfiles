@@ -10,6 +10,10 @@ cd(`${__dirname}/src`);
 
 const files = await globby(["."], { dot: true });
 
-lnk(files[0], "home").then(() => console.log("done"));
+lnk(files[0], "home")
+  .then(() => console.log("done"))
+  .catch(async (e) => {
+    await $`mv ${e.dest}{,.bak}}`;
+  });
 
 echo(JSON.stringify(files, null, 4));
