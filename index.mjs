@@ -24,15 +24,26 @@ for (const name of folders) {
   });
 }
 
+function randomNumber() {
+  return Math.random().toString().split(".")[1];
+}
+
 async function link(items, location, name) {
   try {
     await lnk(items, location, { parents: true, force: false });
   } catch (e) {
     await within(async () => {
       if (items[0].includes("/")) {
+        cd(location);
+        const fileName = items[0].split("/")[0];
+        const name = `${fileName}.bak-${randomNumber()}`;
+        await $`mkdir ${name}`;
+        await $`mv ${location}/${fileName}/ ${location}/${name}/`;
+        await $`mv ${location}/${name}/${fileName}/* ${location}/${name}/`;
+        await $`rmdir ${location}/${name}/${fileName}`;
         return;
       }
-      await $`mv ${e.dest}{,.bak-${Math.random().toString().split(".")[1]}}`;
+      await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
     });
   }
 }
@@ -40,6 +51,7 @@ async function link(items, location, name) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
+    console.log(item);
     await link(item.files, `${__dirname}/${item.location}`);
   });
 }
