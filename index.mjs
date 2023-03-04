@@ -28,6 +28,12 @@ async function link(items, location, name) {
   try {
     await lnk(items, location, { parents: true, force: false });
   } catch (e) {
+    await within(async () => {
+      if (items[0].includes("/")) {
+        return;
+      }
+      await $`mv ${e.dest}{,.bak-${Math.random().toString().split(".")[1]}}`;
+    });
   }
 }
 
