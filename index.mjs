@@ -10,7 +10,7 @@ const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
 const configurations = [];
 
-for (const name of folders)
+for (const name of folders) {
   await within(async () => {
     cd(name);
     const files = await globby(".", { dot: true });
@@ -22,7 +22,18 @@ for (const name of folders)
       name,
     });
   });
+}
 
-async function link(items, location) {
-  await lnk(items, location, { parents: true, type: "symbolic" });
+async function link(items, location, name) {
+  try {
+    await lnk(items, location, { parents: true, force: false });
+  } catch (e) {
+  }
+}
+
+for (const item of configurations) {
+  await within(async () => {
+    cd(item.name);
+    await link(item.files, `${__dirname}/${item.location}`);
+  });
 }
