@@ -33,12 +33,11 @@ function randomNumber() {
 
 function backupFolder(item) {
   const folderName = item.split("/")[0];
-  const newFolderName = `.bak-${randomNumber()}`;
-  return $`mv ${location}/${folderName}{,${newFolderName}}`;
+  return $`mv ${folderName}{,.bak-${randomNumber()}}`;
 }
 
-function backupFile(item, location) {
-  return $`mv ${location}/${item}{,.bak-${randomNumber()}}`;
+function backupFile(item) {
+  return $`mv ${item}{,.bak-${randomNumber()}}`;
 }
 
 async function link(items, location) {
