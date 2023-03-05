@@ -35,6 +35,7 @@ async function backupFolder(item, location) {
   const newFolderName = `.bak-${randomNumber()}`;
   await $`mkdir ${newFolderName}`;
   await $`mv ${location}/${folderName}{,${newFolderName}}`;
+  await $`rmdir ${newFolderName}`;
   return;
 }
 
