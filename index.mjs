@@ -36,8 +36,8 @@ function backupFolder(item, location) {
   return $`mv ${location}/${folderName}{,${newFolderName}}`;
 }
 
-function backupFile(item) {
-  return $`mv ${item}{,.bak-${randomNumber()}}`;
+function backupFile(item, location) {
+  return $`mv ${location}/${item}{,.bak-${randomNumber()}}`;
 }
 
 async function link(items, location) {
@@ -45,13 +45,15 @@ async function link(items, location) {
     try {
       await lnk(item, location, { parents: true });
     } catch (e) {
-      console.log(JSON.stringify(e));
+      console.log(e);
       if (e.code === "EEXIST") {
         if (item.includes("/")) {
           await backupFolder(item, location);
-          return await lnk(item, location, { parents: true });
+          await lnk(item, location, { parents: true });
+          continue;
         }
-        return console.log("files");
+        await backupFile(item, location);
+        await lnk(item, location, { parents: true });
       }
     }
   }
