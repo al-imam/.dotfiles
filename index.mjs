@@ -28,7 +28,7 @@ function randomNumber() {
   return Math.random().toString().split(".")[1];
 }
 
-async function link(items, location, name) {
+async function link(items, location) {
   try {
     await lnk(items, location, { parents: true, force: false });
   } catch (e) {
@@ -44,7 +44,9 @@ async function link(items, location, name) {
         return;
       }
       await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
+      return;
     });
+    await link(items, location);
   }
 }
 
