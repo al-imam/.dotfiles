@@ -32,11 +32,14 @@ function randomNumber() {
 
 async function backupFolder(item, location) {
   const folderName = item.split("/")[0];
-  const newFolderName = `${folderName}.bak-${randomNumber()}`;
+  const newFolderName = `.bak-${randomNumber()}`;
   await $`mkdir ${newFolderName}`;
-  await $`mv ${location}/${folderName}/ ${location}/${newFolderName}/`;
-  await $`mv ${location}/${newFolderName}/${folderName}/* ${location}/${newFolderName}/`;
-  return await $`rmdir ${location}/${newFolderName}/${folderName}`;
+  await $`mv ${location}/${folderName}{,${newFolderName}}`;
+  return;
+}
+
+async function backupFile(item, location) {
+  await $`mv ${item}{,.bak-${randomNumber()}}`;
 }
 
 async function link(items, location) {
