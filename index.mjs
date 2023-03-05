@@ -30,23 +30,26 @@ function randomNumber() {
 
 async function link(items, location) {
   try {
-    await lnk(items, location, { parents: true, force: false });
+    await lnk(items, location, { parents: true });
   } catch (e) {
-    await within(async () => {
-      if (items[0].includes("/")) {
-        cd(location);
-        const folderName = items[0].split("/")[0];
-        const newFolderName = `${folderName}.bak-${randomNumber()}`;
-        await $`mkdir ${newFolderName}`;
-        await $`mv ${location}/${folderName}/ ${location}/${newFolderName}/`;
-        await $`mv ${location}/${newFolderName}/${folderName}/* ${location}/${newFolderName}/`;
-        await $`rmdir ${location}/${newFolderName}/${folderName}`;
+    if (e.code === "EEXIST") {
+      await within(async () => {
+        if (items[0].includes("/")) {
+          cd(location);
+          const folderName = items[0].split("/")[0];
+          const newFolderName = `${folderName}.bak-${randomNumber()}`;
+          await $`mkdir ${newFolderName}`;
+          await $`mv ${location}/${folderName}/ ${location}/${newFolderName}/`;
+          await $`mv ${location}/${newFolderName}/${folderName}/* ${location}/${newFolderName}/`;
+          await $`rmdir ${location}/${newFolderName}/${folderName}`;
+          return;
+        }
+        await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
         return;
-      }
-      await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
-      return;
-    });
-    await link(items, location);
+      });
+      return await link(items, location);
+    }
+    console.error(e);
   }
 }
 
