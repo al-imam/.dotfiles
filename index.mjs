@@ -43,6 +43,30 @@ async function backupFile(item, location) {
   await $`mv ${item}{,.bak-${randomNumber()}}`;
 }
 
+async function backupFileOrFolder(item, location) {
+  if (item.includes("/")) {
+    return await backupFolder(item, location);
+  }
+  return await backupFile(item, location);
+}
+
+async function isFileOrDirectoryExist(name) {
+  let b;
+  try {
+    if (name.includes("/")) {
+      await $`test -d ${name.split("/")[0]}`;
+      b = true;
+    }
+    await $`test -f ${name}`;
+    b = true;
+  } catch {
+    b = false;
+  } finally {
+    console.log(name, b);
+  }
+  return b;
+}
+
 async function link(items, location) {
   try {
     await lnk(items, location, { parents: true });
