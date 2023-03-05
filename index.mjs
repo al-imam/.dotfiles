@@ -4,7 +4,9 @@ import lnk from "lnk";
 
 $.verbose = false;
 
-cd(`${__dirname}/src`);
+const dirname = __dirname.replaceAll("\\", "/");
+
+cd(`${dirname}/src`);
 
 const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
@@ -56,7 +58,6 @@ async function link(items, location) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
-    console.log(item);
-    await link(item.files, `${__dirname}/${item.location}`);
+    await link(item.files, `${dirname}/${item.location}`);
   });
 }
