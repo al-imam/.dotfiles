@@ -47,9 +47,8 @@ async function link(items, location) {
     if (e.code === "EEXIST") {
       await within(async () => {
         cd(location);
-        console.log(e);
         for (const item of items) {
-          if (existsSync(item.split("/")[0])) {
+          if (existsSync(item)) {
             console.log("includes");
             if (item.includes("/")) {
               await backupFolder(item);
@@ -60,7 +59,7 @@ async function link(items, location) {
         }
       });
 
-      await lnk(items, location, { parents: true });
+      return await lnk(items, location, { parents: true });
     }
   }
 }
