@@ -31,7 +31,7 @@ function randomNumber() {
   return Math.random().toString().split(".")[1];
 }
 
-function backupFolder(item, location) {
+function backupFolder(item) {
   const folderName = item.split("/")[0];
   const newFolderName = `.bak-${randomNumber()}`;
   return $`mv ${location}/${folderName}{,${newFolderName}}`;
