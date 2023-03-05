@@ -41,27 +41,19 @@ function backupFile(item) {
 }
 
 async function link(items, location) {
-  try {
-    await lnk(items, location, { parents: true });
-  } catch (e) {
-    if (e.code === "EEXIST") {
-      await within(async () => {
-        if (items[0].includes("/")) {
-          cd(location);
-          const folderName = items[0].split("/")[0];
-          const newFolderName = `${folderName}.bak-${randomNumber()}`;
-          await $`mkdir ${newFolderName}`;
-          await $`mv ${location}/${folderName}/ ${location}/${newFolderName}/`;
-          await $`mv ${location}/${newFolderName}/${folderName}/* ${location}/${newFolderName}/`;
-          await $`rmdir ${location}/${newFolderName}/${folderName}`;
-          return;
+  for (const item of items) {
+    try {
+      await lnk(item, location, { parents: true });
+    } catch (e) {
+      console.log(JSON.stringify(e));
+      if (e.code === "EEXIST") {
+        if (item.includes("/")) {
+          await backupFolder(item, location);
+          return await lnk(item, location, { parents: true });
         }
-        await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
-        return;
-      });
-      return await link(items, location);
+        return console.log("files");
+      }
     }
-    console.error(e);
   }
 }
 
