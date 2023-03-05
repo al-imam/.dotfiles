@@ -35,12 +35,12 @@ async function link(items, location, name) {
     await within(async () => {
       if (items[0].includes("/")) {
         cd(location);
-        const fileName = items[0].split("/")[0];
-        const name = `${fileName}.bak-${randomNumber()}`;
-        await $`mkdir ${name}`;
-        await $`mv ${location}/${fileName}/ ${location}/${name}/`;
-        await $`mv ${location}/${name}/${fileName}/* ${location}/${name}/`;
-        await $`rmdir ${location}/${name}/${fileName}`;
+        const folderName = items[0].split("/")[0];
+        const newFolderName = `${folderName}.bak-${randomNumber()}`;
+        await $`mkdir ${newFolderName}`;
+        await $`mv ${location}/${folderName}/ ${location}/${newFolderName}/`;
+        await $`mv ${location}/${newFolderName}/${folderName}/* ${location}/${newFolderName}/`;
+        await $`rmdir ${location}/${newFolderName}/${folderName}`;
         return;
       }
       await $`mv ${e.dest}{,.bak-${randomNumber()}}`;
