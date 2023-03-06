@@ -108,13 +108,16 @@ for (const item of configurations) {
   });
 }
 
+echo(
+  chalk.dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`)
+);
 echo(backupLogs.join("\n"));
 echo(
   chalk.dim(
     `\nTotal ${configurations.length} directory and ${configurations.reduce(
       (a, v) => v.files.length + a,
       0
-    )} files 🥲`
+    )} files 📌`
   )
 );
 echo(successLogs.join("\n"));
