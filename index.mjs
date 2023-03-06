@@ -56,6 +56,8 @@ function showLogs(x) {
   return yellow(`${cyan("backup")} ${file} ${green("->")} ${backup}`);
 }
 
+const backupLogs = [];
+
 async function link(items, location) {
   await within(async () => {
     if (!existsSync(location)) return;
@@ -66,11 +68,11 @@ async function link(items, location) {
       if (existsSync(item)) {
         if (item.includes("/")) {
           const { stdout: log } = await backupFolder(item);
-          echo(showLogs(log));
+          backupLogs.push(showLogs(log));
           continue;
         }
         const { stdout: log } = await backupFile(item);
-        echo(showLogs(log));
+        backupLogs.push(showLogs(log));
       }
     }
   });
@@ -101,3 +103,5 @@ for (const item of configurations) {
     await link(item.files, `${dirname}/${item.location}`);
   });
 }
+
+echo(backupLogs.join("\n"));
