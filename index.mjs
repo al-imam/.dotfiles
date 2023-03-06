@@ -69,7 +69,8 @@ async function link(items, location) {
           echo(showLogs(log));
           continue;
         }
-        await backupFile(item);
+        const { stdout: log } = await backupFile(item);
+        echo(showLogs(log));
       }
     }
   });
