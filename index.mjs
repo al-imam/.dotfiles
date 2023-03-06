@@ -31,7 +31,7 @@ const yellow = chalk.yellow;
 const red = chalk.red;
 const cyan = chalk.cyan;
 const green = chalk.green;
-const white = chalk.whiteBright;
+const dim = chalk.dim;
 const blue = chalk.blue;
 
 function randomNumber() {
@@ -97,7 +97,7 @@ async function link(items, location) {
       },
     });
   } catch (e) {
-    echo(chalk.red(JSON.stringify(e, null, 4)));
+    echo(red(JSON.stringify(e, null, 4)));
   }
 }
 
@@ -108,12 +108,10 @@ for (const item of configurations) {
   });
 }
 
-echo(
-  chalk.dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`)
-);
+echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
 echo(backupLogs.join("\n"));
 echo(
-  chalk.dim(
+  dim(
     `\nTotal ${configurations.length} directory and ${configurations.reduce(
       (a, v) => v.files.length + a,
       0
