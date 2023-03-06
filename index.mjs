@@ -41,26 +41,26 @@ function backupFile(item) {
 }
 
 async function link(items, location) {
+  await within(async () => {
+    if (!existsSync(location)) return;
+
+    cd(location);
+
+    for (const item of items) {
+      if (existsSync(item)) {
+        if (item.includes("/")) {
+          await backupFolder(item);
+          continue;
+        }
+        await backupFile(item);
+      }
+    }
+  });
+
   try {
     await lnk(items, location, { parents: true });
   } catch (e) {
-    if (e.code === "EEXIST") {
-      await within(async () => {
-        cd(location);
-        for (const item of items) {
-          if (existsSync(item)) {
-            console.log("includes");
-            if (item.includes("/")) {
-              await backupFolder(item);
-              continue;
-            }
-            await backupFile(item);
-          }
-        }
-      });
-
-      return await lnk(items, location, { parents: true });
-    }
+    console.log(e);
   }
 }
 
