@@ -48,16 +48,16 @@ function getTime() {
     .slice(0, -3)
     .replaceAll("/", "-")
     .replaceAll(":", "-")
-    .replaceAll(", ", "^");
+    .replaceAll(", ", "_");
 }
 
 function backupFolder(item) {
   const folderName = item.split("/")[0];
-  return $`mv ${folderName}{,.bak-${randomNumber()}} -v`;
+  return $`mv ${folderName}{,.bak_${getTime()}} -v`;
 }
 
 function backupFile(item) {
-  return $`mv ${item}{,.bak-${randomNumber()}} -v`;
+  return $`mv ${item}{,.bak_${getTime()}} -v`;
 }
 
 function showLogs(x) {
@@ -124,7 +124,7 @@ for (const item of configurations) {
 if (backupLogs.length > 0) {
   echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
   echo(backupLogs.join("\n"));
-  echo();
+  echo("");
 }
 
 echo(
