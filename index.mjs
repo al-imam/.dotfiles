@@ -46,6 +46,16 @@ function backupFile(item) {
   return $`mv ${item}{,.bak-${randomNumber()}} -v`;
 }
 
+function showLogs(x) {
+  const [file, backup] = x
+    .replace("renamed", "")
+    .replaceAll(" ", "")
+    .replaceAll("'", "")
+    .replace("\n", "")
+    .split("->");
+  return yellow(`${cyan("backup")} ${file} ${green("->")} ${backup}`);
+}
+
 async function link(items, location) {
   await within(async () => {
     if (!existsSync(location)) return;
@@ -56,6 +66,7 @@ async function link(items, location) {
       if (existsSync(item)) {
         if (item.includes("/")) {
           const { stdout: log } = await backupFolder(item);
+          echo(showLogs(log));
           continue;
         }
         await backupFile(item);
@@ -64,7 +75,7 @@ async function link(items, location) {
   });
 
   try {
-    const array = await lnk(items, location, {
+    await lnk(items, location, {
       parents: true,
       log: (_1, _2, _3, replace, file) => {
         if (Array.isArray(replace)) {
