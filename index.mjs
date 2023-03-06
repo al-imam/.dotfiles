@@ -60,7 +60,7 @@ async function link(items, location) {
   try {
     await lnk(items, location, { parents: true });
   } catch (e) {
-    console.log(e);
+    echo(chalk.red(JSON.stringify(e, null, 4)));
   }
 }
 
