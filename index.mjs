@@ -66,7 +66,20 @@ async function link(items, location) {
   });
 
   try {
-    await lnk(items, location, { parents: true });
+    const array = await lnk(items, location, {
+      parents: true,
+      log: (_1, _2, _3, replace, file) => {
+        if (Array.isArray(replace)) {
+          replace.forEach((e, i) => {
+            echo(
+              chalk.green(
+                `${e.replaceAll("\n", "")} -> ${file.replace(":", "")}`
+              )
+            );
+          });
+        }
+      },
+    });
   } catch (e) {
     echo(chalk.red(JSON.stringify(e, null, 4)));
   }
