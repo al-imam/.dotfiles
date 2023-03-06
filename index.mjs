@@ -29,7 +29,6 @@ for (const name of folders) {
 
 const yellow = chalk.yellow;
 const red = chalk.red;
-const cyan = chalk.cyan;
 const green = chalk.green;
 const dim = chalk.dim;
 const blue = chalk.blue;
