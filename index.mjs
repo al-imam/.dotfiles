@@ -117,7 +117,7 @@ async function link(items, location) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
-    await link(item.files, `${dirname}/${item.location}`);
+    await link(item.files, `${item.location}`);
   });
 }
 
