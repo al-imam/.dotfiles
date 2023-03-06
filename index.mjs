@@ -27,6 +27,12 @@ for (const name of folders) {
   });
 }
 
+const yellow = chalk.yellow;
+const red = chalk.red;
+const cyan = chalk.cyan;
+const green = chalk.green;
+const white = chalk.whiteBright;
+
 function randomNumber() {
   return Math.random().toString().split(".")[1];
 }
@@ -50,14 +56,6 @@ async function link(items, location) {
       if (existsSync(item)) {
         if (item.includes("/")) {
           const { stdout: log } = await backupFolder(item);
-          echo(
-            chalk.yellow(
-              log
-                .replaceAll("'", "")
-                .replace("\n", "")
-                .replace("renamed", "backup")
-            )
-          );
           continue;
         }
         await backupFile(item);
