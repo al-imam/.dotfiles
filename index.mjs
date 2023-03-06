@@ -33,11 +33,11 @@ function randomNumber() {
 
 function backupFolder(item) {
   const folderName = item.split("/")[0];
-  return $`mv ${folderName}{,.bak-${randomNumber()}}`;
+  return $`mv ${folderName}{,.bak-${randomNumber()}} -v`;
 }
 
 function backupFile(item) {
-  return $`mv ${item}{,.bak-${randomNumber()}}`;
+  return $`mv ${item}{,.bak-${randomNumber()}} -v`;
 }
 
 async function link(items, location) {
@@ -49,7 +49,15 @@ async function link(items, location) {
     for (const item of items) {
       if (existsSync(item)) {
         if (item.includes("/")) {
-          await backupFolder(item);
+          const { stdout: log } = await backupFolder(item);
+          echo(
+            chalk.yellow(
+              log
+                .replaceAll("'", "")
+                .replace("\n", "")
+                .replace("renamed", "backup")
+            )
+          );
           continue;
         }
         await backupFile(item);
