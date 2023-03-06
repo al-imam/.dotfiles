@@ -54,7 +54,7 @@ function showLogs(x) {
     .replaceAll("'", "")
     .replace("\n", "")
     .split("->");
-  return yellow(`${cyan("backup")} ${file} ${green("->")} ${backup}`);
+  return yellow(`♻️ ${file} ${green("->")} ${backup}`);
 }
 
 const backupLogs = [];
