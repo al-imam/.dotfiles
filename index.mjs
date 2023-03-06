@@ -33,8 +33,22 @@ const green = chalk.green;
 const dim = chalk.dim;
 const blue = chalk.blue;
 
-function randomNumber() {
-  return Math.random().toString().split(".")[1];
+const time = new Intl.DateTimeFormat("en", {
+  day: "2-digit",
+  second: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  minute: "2-digit",
+  hour: "2-digit",
+});
+
+function getTime() {
+  return time
+    .format(new Date())
+    .slice(0, -3)
+    .replaceAll("/", "-")
+    .replaceAll(":", "-")
+    .replaceAll(", ", "^");
 }
 
 function backupFolder(item) {
