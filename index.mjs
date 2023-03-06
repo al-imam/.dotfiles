@@ -87,7 +87,7 @@ async function link(items, location) {
           for (const l of r) {
             successLogs.push(
               blue(
-                `📌 ${yellow(l.replaceAll("\n", "").toLowerCase())} -> ${green(
+                `📌 ${green(l.replaceAll("\n", "").toLowerCase())} -> ${blue(
                   f.replace(":", "").toLowerCase()
                 )}`
               )
@@ -109,4 +109,12 @@ for (const item of configurations) {
 }
 
 echo(backupLogs.join("\n"));
+echo(
+  chalk.dim(
+    `\nTotal ${configurations.length} directory and ${configurations.reduce(
+      (a, v) => v.files.length + a,
+      0
+    )} files 🥲`
+  )
+);
 echo(successLogs.join("\n"));
