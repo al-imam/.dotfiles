@@ -32,6 +32,7 @@ const red = chalk.red;
 const cyan = chalk.cyan;
 const green = chalk.green;
 const white = chalk.whiteBright;
+const blue = chalk.blue;
 
 function randomNumber() {
   return Math.random().toString().split(".")[1];
@@ -57,6 +58,7 @@ function showLogs(x) {
 }
 
 const backupLogs = [];
+const successLogs = [];
 
 async function link(items, location) {
   await within(async () => {
@@ -80,15 +82,17 @@ async function link(items, location) {
   try {
     await lnk(items, location, {
       parents: true,
-      log: (_1, _2, _3, replace, file) => {
-        if (Array.isArray(replace)) {
-          replace.forEach((e, i) => {
-            echo(
-              chalk.green(
-                `${e.replaceAll("\n", "")} -> ${file.replace(":", "")}`
+      log: (_1, _2, _3, r, f) => {
+        if (Array.isArray(r)) {
+          for (const l of r) {
+            successLogs.push(
+              blue(
+                `📌 ${yellow(l.replaceAll("\n", "").toLowerCase())} -> ${green(
+                  f.replace(":", "").toLowerCase()
+                )}`
               )
             );
-          });
+          }
         }
       },
     });
@@ -105,3 +109,4 @@ for (const item of configurations) {
 }
 
 echo(backupLogs.join("\n"));
+echo(successLogs.join("\n"));
