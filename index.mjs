@@ -17,7 +17,7 @@ function processPath(cat) {
   if (normalizedLocation.startsWith("$HOME")) {
     const arrayOfPaths = normalizedLocation.split(path.sep);
     arrayOfPaths[0] = os.homedir();
-    return path.join(...arrayOfPaths);
+    return normalize(path.join(...arrayOfPaths));
   }
   return normalizedLocation;
 }
@@ -31,17 +31,9 @@ for (const name of folders) {
 
     const { stdout: cat } = await $`cat ${files[files.indexOf("drop.txt")]}`;
 
-    let location = normalize(cat);
-
-    if (location.startsWith("$HOME")) {
-      const p = location.split(path.sep);
-      p[0] = os.homedir();
-      location = path.join(...p);
-    }
-
     configurations.push({
       files: files.filter((e) => e !== "drop.txt"),
-      location,
+      location: processPath(cat),
       name,
     });
   });
