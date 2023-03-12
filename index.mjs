@@ -134,6 +134,9 @@ async function link(items, location) {
       },
     });
   } catch (e) {
+    if (e.code === "EXDEV") {
+      throw red("Cannot create symlink between tow partition! 🥲");
+    }
     echo(red(JSON.stringify(e, null, 4)));
   }
 }
