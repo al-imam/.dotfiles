@@ -44,7 +44,7 @@ for (const name of folders) {
     const { stdout: cat } = await $`cat ${files[files.indexOf("drop.txt")]}`;
 
     configurations.push({
-      files: files.filter((e) => e !== "drop.txt"),
+      files: files.filter((e) => e !== "drop.txt").map((e) => normalize(e)),
       location: processPath(cat),
       name,
     });
