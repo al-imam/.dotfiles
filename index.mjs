@@ -15,7 +15,10 @@ const configurations = [];
 for (const name of folders) {
   await within(async () => {
     cd(name);
+
     const files = await globby(".", { dot: true });
+    if (!files.includes("drop.txt")) return;
+
     const cat = await $`cat ${files.at(files.indexOf("drop.txt"))}`;
     const location = normalize(cat.stdout);
 
