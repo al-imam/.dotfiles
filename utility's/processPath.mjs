@@ -1,3 +1,5 @@
+import { normalize } from "path";
+
 function processPath(cat) {
   if (cat === "") throw new Error("empty");
 
