@@ -6,9 +6,7 @@ import { normalize } from "path";
 
 $.verbose = false;
 
-const dirname = normalize(path.join(__dirname, "src"));
-
-cd(`${dirname}/src`);
+cd(normalize(path.join(__dirname, "src")));
 
 const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
