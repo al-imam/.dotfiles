@@ -19,8 +19,15 @@ for (const name of folders) {
     const files = await globby(".", { dot: true });
     if (!files.includes("drop.txt")) return;
 
-    const cat = await $`cat ${files.at(files.indexOf("drop.txt"))}`;
-    const location = normalize(cat.stdout);
+    const { stdout: cat } = await $`cat ${files[files.indexOf("drop.txt")]}`;
+
+    let location = normalize(cat);
+
+    if (location.startsWith("$HOME")) {
+      const p = location.split(path.sep);
+      p[0] = os.homedir();
+      location = path.join(...p);
+    }
 
     configurations.push({
       files: files.filter((e) => e !== "drop.txt"),
