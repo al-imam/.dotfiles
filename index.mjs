@@ -3,8 +3,11 @@ import "zx/globals";
 import lnk from "lnk";
 import { existsSync } from "fs";
 import { normalize } from "path";
+import getOption from "./utility's/option.mjs";
 
 $.verbose = false;
+
+const options = getOption(argv);
 
 cd(normalize(path.join(__dirname, "src")));
 
@@ -14,7 +17,9 @@ const green = chalk.green;
 const dim = chalk.dim;
 const blue = chalk.blue;
 
-const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
+const folders = (await $`ls -a --ignore=${options.ignore} `).stdout
+  .split("\n")
+  .slice(2, -1);
 
 const configurations = [];
 
@@ -149,7 +154,7 @@ async function link(items, location) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
-    await link(item.files, item.location);
+    // await link(item.files, item.location);
   });
 }
 
