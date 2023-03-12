@@ -34,7 +34,8 @@ function processPath(cat) {
     const arrayOfPaths = normalizedLocation
       .split(path.sep)
       .filter((e) => e !== "");
-    console.log(arrayOfPaths);
+    arrayOfPaths[0] = arrayOfPaths[0].toUpperCase() + ":";
+    return normalize(path.join(...arrayOfPaths));
   }
 
   return normalizedLocation;
@@ -162,11 +163,7 @@ if (backupLogs.length > 0) {
 }
 
 echo(
-  dim(
-    `Total ${configurations.length} directory and ${configurations.reduce(
-      (a, v) => v.files.length + a,
-      0
-    )} files 📌`
-  )
+  dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
 );
+
 echo(successLogs.join("\n"));
