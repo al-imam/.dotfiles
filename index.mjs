@@ -22,7 +22,8 @@ function processPath(cat) {
 
   if (
     normalizedLocation.startsWith(path.sep) &&
-    !normalizedLocation.includes(":")
+    !normalizedLocation.includes(":") &&
+    os.platform() === "win32"
   ) {
     console.log(normalizedLocation.split(path.sep));
   }
