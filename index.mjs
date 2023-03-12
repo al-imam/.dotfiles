@@ -54,6 +54,8 @@ for (const name of folders) {
       location: processPath(cat),
       name,
     });
+  }).catch(() => {
+    throw red("Something went wrong in processing files! 😓");
   });
 }
 
