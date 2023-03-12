@@ -25,7 +25,10 @@ function processPath(cat) {
     !normalizedLocation.includes(":") &&
     os.platform() === "win32"
   ) {
-    console.log(normalizedLocation.split(path.sep));
+    const arrayOfPaths = normalizedLocation
+      .split(path.sep)
+      .filter((e) => e !== "");
+    console.log(arrayOfPaths);
   }
 
   return normalizedLocation;
