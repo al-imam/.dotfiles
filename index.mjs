@@ -151,6 +151,10 @@ for (const item of configurations) {
   });
 }
 
+function getTotal() {
+  return configurations.reduce((a, v) => v.files.length + a, 0);
+}
+
 if (backupLogs.length > 0) {
   echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
   echo(backupLogs.join("\n"));
