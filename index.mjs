@@ -126,13 +126,9 @@ async function link(items, location) {
       log: (_1, _2, _3, r, f) => {
         if (Array.isArray(r)) {
           for (const l of r) {
-            successLogs.push(
-              blue(
-                `📌 ${green(l.replaceAll("\n", "").toLowerCase())} -> ${blue(
-                  f.replace(":", "").toLowerCase()
-                )}`
-              )
-            );
+            const targets = green(l.replaceAll("\n", "").toLowerCase());
+            const directory = blue(f.replace(":", "").toLowerCase());
+            successLogs.push(blue(`📌 ${targets} -> ${directory}`));
           }
         }
       },
