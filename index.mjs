@@ -54,16 +54,11 @@ for (const name of folders) {
       location: processPath(cat),
       name,
     });
-  }).catch(() => {
+  }).catch((e) => {
+    echo(red(e));
     throw red("Something went wrong in processing files! 😓");
   });
 }
-
-const yellow = chalk.yellow;
-const red = chalk.red;
-const green = chalk.green;
-const dim = chalk.dim;
-const blue = chalk.blue;
 
 const time = new Intl.DateTimeFormat("en", {
   day: "2-digit",
@@ -145,7 +140,7 @@ async function link(items, location) {
     if (e.code === "EXDEV") {
       throw red("Cannot create symlink between tow partition! 🥲");
     }
-    echo(red(JSON.stringify(e, null, 4)));
+    echo(red(e));
   }
 }
 
