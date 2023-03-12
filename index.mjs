@@ -19,6 +19,8 @@ const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 const configurations = [];
 
 function processPath(cat) {
+  if (cat === "") throw new Error("empty");
+
   const normalizedLocation = normalize(cat);
   if (normalizedLocation.startsWith("$HOME")) {
     const arrayOfPaths = normalizedLocation.split(path.sep);
@@ -56,8 +58,11 @@ for (const name of folders) {
       name,
     });
   }).catch((e) => {
-    echo(red(e));
-    throw red("Something went wrong in processing files! 😓");
+    if (e.message === "empty") {
+      throw red(`drop file is empty in ${yellow(`src/${name}`)} directory! 😓`);
+    }
+
+    throw red(JSON.stringify(e, null, 4));
   });
 }
 
@@ -137,7 +142,7 @@ async function link(items, location) {
     if (e.code === "EXDEV") {
       throw red("Cannot create symlink between tow partition! 🥲");
     }
-    echo(red(e));
+    throw red(JSON.stringify(e, null, 4));
   }
 }
 
