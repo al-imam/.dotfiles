@@ -12,6 +12,16 @@ const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
 const configurations = [];
 
+function processPath(cat) {
+  const normalizedLocation = normalize(cat);
+  if (normalizedLocation.startsWith("$HOME")) {
+    const arrayOfPaths = normalizedLocation.split(path.sep);
+    arrayOfPaths[0] = os.homedir();
+    return path.join(...arrayOfPaths);
+  }
+  return normalizedLocation;
+}
+
 for (const name of folders) {
   await within(async () => {
     cd(name);
