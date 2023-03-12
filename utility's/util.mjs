@@ -1,6 +1,7 @@
 import getTime from "./getTime.mjs";
 
 const green = chalk.green;
+const yellow = chalk.yellow;
 
 export function backupFolder(item) {
   const folderName = item.split("/")[0];
