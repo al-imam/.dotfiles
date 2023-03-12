@@ -19,6 +19,14 @@ function processPath(cat) {
     arrayOfPaths[0] = os.homedir();
     return normalize(path.join(...arrayOfPaths));
   }
+
+  if (
+    normalizedLocation.startsWith(path.sep) &&
+    !normalizedLocation.includes(":")
+  ) {
+    console.log(normalizedLocation.split(path.sep));
+  }
+
   return normalizedLocation;
 }
 
