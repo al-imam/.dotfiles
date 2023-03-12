@@ -8,6 +8,12 @@ $.verbose = false;
 
 cd(normalize(path.join(__dirname, "src")));
 
+const yellow = chalk.yellow;
+const red = chalk.red;
+const green = chalk.green;
+const dim = chalk.dim;
+const blue = chalk.blue;
+
 const folders = (await $`ls -a`).stdout.split("\n").slice(2, -1);
 
 const configurations = [];
