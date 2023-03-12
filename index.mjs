@@ -168,8 +168,12 @@ if (backupLogs.length > 0) {
   echo("");
 }
 
-echo(
-  dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
-);
+if (configurations.length > 0) {
+  echo(
+    dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
+  );
 
-echo(successLogs.join("\n"));
+  echo(successLogs.join("\n"));
+} else {
+  echo(yellow("There is no directory or file to create symlinks 🧬"));
+}
