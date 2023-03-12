@@ -2,10 +2,11 @@
 import "zx/globals";
 import lnk from "lnk";
 import { existsSync } from "fs";
+import { normalize } from "path";
 
 $.verbose = false;
 
-const dirname = __dirname.replaceAll("\\", "/");
+const dirname = normalize(path.join(__dirname, "src"));
 
 cd(`${dirname}/src`);
 
