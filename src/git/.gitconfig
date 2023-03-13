@@ -1,3 +1,9 @@
 [user]
 	email = alimam01828@gmail.com
 	name = al-imam
+
+[core]
+	editor = \"C:\\Users\\al_imam\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+	autocrlf = false
+	whitespace = cr-at-eol
+	symlinks = true
