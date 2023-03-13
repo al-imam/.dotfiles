@@ -7,3 +7,6 @@
 	autocrlf = false
 	whitespace = cr-at-eol
 	symlinks = true
+
+[init]
+	defaultBranch = main
