@@ -4,7 +4,7 @@ const green = chalk.green;
 const yellow = chalk.yellow;
 
 export function backupFolder(item) {
-  const folderName = item.split("/")[0];
+  const folderName = item.split(path.sep)[0];
   return $`mv ${folderName}{,.bak_${getTime()}} -v`;
 }
 
