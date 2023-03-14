@@ -9,7 +9,7 @@ export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
   await $`mkdir ${backup}`;
   const files = await listDirectoryAndFile(item);
   for (const file of files) {
-    await backupFile(join(item, file), join(item, file));
+    await backupFile(join(item, file), join(backup, file));
   }
 }
 
