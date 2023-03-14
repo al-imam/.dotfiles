@@ -24,11 +24,6 @@ export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
 }
 
 export function showLogs(x) {
-  const [file, backup] = x
-    .replace("renamed", "")
-    .replaceAll(" ", "")
-    .replaceAll("'", "")
-    .replace("\n", "")
-    .split("->");
+  const [file, backup] = x;
   return yellow(`♻️ ${file} ${green("->")} ${backup}`);
 }
