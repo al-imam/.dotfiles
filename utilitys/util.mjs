@@ -1,11 +1,16 @@
 import getTime from "./getTime.mjs";
+import listDirectoryAndFile from "./listDirectoryAndFile.mjs";
+import { join } from "path";
 
 const green = chalk.green;
 const yellow = chalk.yellow;
 
-export function backupFolder(item) {
-  const folderName = item.split(path.sep)[0];
-  return $`mv ${folderName}{,.bak_${getTime()}} -v`;
+export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
+  await $`mkdir ${backup}`;
+  const files = await listDirectoryAndFile(item);
+  for (const file of files) {
+    await backupFile(join(item, file), join(item, file));
+  }
 }
 
 export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
