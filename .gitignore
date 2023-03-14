@@ -11,6 +11,8 @@ output
 node_modules
 *.local
 
+__*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
