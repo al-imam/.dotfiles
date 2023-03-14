@@ -2,16 +2,17 @@
 import "zx/globals";
 import lnk from "lnk";
 import { existsSync } from "fs";
-import { normalize } from "path";
-import getOption from "./utility's/option.mjs";
-import processPath from "./utility's/processPath.mjs";
-import { backupFile, backupFolder, showLogs } from "./utility's/util.mjs";
+import { join, normalize } from "path";
+import getOption from "./utilitys/option.mjs";
+import processPath from "./utilitys/processPath.mjs";
+import { backupFile, backupFolder, showLogs } from "./utilitys/util.mjs";
+import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
 
 $.verbose = false;
 
 const options = getOption(argv);
 
-cd(normalize(path.join(__dirname, "src")));
+cd(normalize(join(__dirname, "src")));
 
 const yellow = chalk.yellow;
 const red = chalk.red;
@@ -19,10 +20,7 @@ const green = chalk.green;
 const dim = chalk.dim;
 const blue = chalk.blue;
 
-const folders = (await $`ls -a --ignore=${options.ignore} `).stdout
-  .split("\n")
-  .slice(2, -1);
-
+const folders = await listDirectoryAndFile();
 const configurations = [];
 
 for (const name of folders) {
@@ -39,12 +37,12 @@ for (const name of folders) {
       location: processPath(cat),
       name,
     });
-  }).catch((e) => {
-    if (e.message === "empty") {
+  }).catch((fileProcessingError) => {
+    if (fileProcessingError.message === "empty") {
       throw red(`drop file is empty in ${yellow(`src/${name}`)} directory! 😓`);
     }
 
-    throw red(e);
+    throw red(fileProcessingError);
   });
 }
 
@@ -60,12 +58,12 @@ async function link(items, location) {
     for (const item of items) {
       if (existsSync(item)) {
         if (item.includes(path.sep)) {
-          const { stdout: log } = await backupFolder(item);
-          backupLogs.push(showLogs(log));
+          await backupFolder(item.split(path.sep)[0]);
+          // backupLogs.push(showLogs(log));
           continue;
         }
-        const { stdout: log } = await backupFile(item);
-        backupLogs.push(showLogs(log));
+        await backupFile(item);
+        // backupLogs.push(showLogs(log));
       }
     }
   });
@@ -94,7 +92,7 @@ async function link(items, location) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
-    await link(item.files, item.location);
+    await link(item.files, join(__dirname, item.location));
   });
 }
 
