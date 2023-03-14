@@ -20,6 +20,7 @@ export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
 export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
   await $`cat ${item} > ${backup}`;
   await $`rm --force ${item}`;
+  return [item, backup];
 }
 
 export function showLogs(x) {
