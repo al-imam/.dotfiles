@@ -59,7 +59,7 @@ async function link(items, location) {
 
     for (const item of items) {
       if (existsSync(item)) {
-        if (item.includes("/")) {
+        if (item.includes(path.sep)) {
           const { stdout: log } = await backupFolder(item);
           backupLogs.push(showLogs(log));
           continue;
