@@ -58,12 +58,12 @@ async function link(items, location) {
     for (const item of items) {
       if (existsSync(item)) {
         if (item.includes(path.sep)) {
-          await backupFolder(item.split(path.sep)[0]);
-          // backupLogs.push(showLogs(log));
+          const log = await backupFolder(item.split(path.sep)[0]);
+          backupLogs.push(showLogs(log));
           continue;
         }
-        await backupFile(item);
-        // backupLogs.push(showLogs(log));
+        const log = await backupFile(item);
+        backupLogs.push(showLogs(log));
       }
     }
   });
