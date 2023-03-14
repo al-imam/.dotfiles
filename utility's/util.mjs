@@ -8,8 +8,9 @@ export function backupFolder(item) {
   return $`mv ${folderName}{,.bak_${getTime()}} -v`;
 }
 
-export function backupFile(item) {
-  return $`mv ${item}{,.bak_${getTime()}} -v`;
+export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
+  await $`cat ${item} > ${backup}`;
+  await $`rm --force ${item}`;
 }
 
 export function showLogs(x) {
