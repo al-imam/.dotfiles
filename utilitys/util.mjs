@@ -7,7 +7,12 @@ const yellow = chalk.yellow;
 
 export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
   await $`mkdir ${backup}`;
-  const files = await listDirectoryAndFile(item);
+
+  const files = await within(async () => {
+    cd(item);
+    return await glob(".", { dot: true });
+  });
+
   for (const file of files) {
     await backupFile(join(item, file), join(backup, file));
   }
