@@ -11,6 +11,9 @@ export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
   const files = await listDirectoryAndFile(item);
 
   for (const file of files) {
+    if (fs.lstatSync(join(item, file)).isDirectory()) {
+      continue;
+    }
     await backupFile(join(item, file), join(backup, file));
   }
 }
