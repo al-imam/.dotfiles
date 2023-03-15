@@ -88,9 +88,9 @@ async function link(items, location, name) {
   }
 }
 
-function yesOrNo(text) {
-  return question(
-    `${text} (${chalk.bold.underline("Yes")}/${chalk.dim("No")})`,
+async function yesOrNo(text) {
+  return await question(
+    `${text} ${dim("(" + chalk.underline("Yes") + "/No)")}`,
     ["Yes", "No"]
   );
 }
