@@ -79,6 +79,7 @@ async function link(items, location, name) {
   try {
     await lnk(items, location, {
       parents: true,
+      force: true,
       log: (_1, _2, _3, r, f) => {
         if (Array.isArray(r)) {
           for (const l of r) {
@@ -93,7 +94,12 @@ async function link(items, location, name) {
     if (e.code === "EXDEV") {
       throw red("Cannot create symlink between tow partition! 🥲");
     }
-    throw red(e);
+
+    if (e.message.includes("are the same")) {
+      echo(chalk.dim("You're trying to create backup for same file 😂"));
+    }
+
+    echo(chalk.red(e));
   }
 }
 
