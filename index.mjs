@@ -96,6 +96,14 @@ async function yesOrNo(text) {
 }
 
 for (const item of configurations) {
+  if (!options.y) {
+    const ans = await yesOrNo(
+      chalk.cyan(
+        `do you want to create symlink for ${chalk.blueBright(item.name)} ?`
+      )
+    );
+    if (ans.toLowerCase() !== "yes") continue;
+  }
   await within(async () => {
     cd(item.name);
     await link(item.files, join(__dirname, item.location), item.name);
