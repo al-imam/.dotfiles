@@ -1,3 +1,3 @@
-export default ({ y = false }) => {
-  return { y };
+export default ({ y = false, backup = false }) => {
+  return { y, backup };
 };
