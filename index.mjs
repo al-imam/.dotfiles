@@ -119,11 +119,13 @@ for (const item of configurations) {
   }
   await within(async () => {
     cd(item.name);
-    const logs = await link(
+    const { backupLogs, successLogs } = await link(
       item.files,
       join(__dirname, item.location),
       item.name
     );
+    if (backupLogs.length > 0) echo(backupLogs.join("\n"));
+    if (successLogs.length > 0) echo(successLogs.join("\n"));
   });
 }
 
