@@ -19,6 +19,8 @@ const red = chalk.red;
 const green = chalk.green;
 const dim = chalk.dim;
 const blue = chalk.blue;
+const purple = chalk.hex("#ff92df");
+const blueLight = chalk.hex("#aa77ff");
 
 const folders = await listDirectoryAndFile();
 const configurations = [];
