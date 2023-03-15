@@ -53,6 +53,15 @@ async function link(items, location, name) {
   await within(async () => {
     if (!existsSync(location)) return;
 
+    if (!options.backup) {
+      const ans = await yesOrNo(
+        chalk.yellow(
+          `${chalk.blue(name)} files are already exist create backup ? `
+        )
+      );
+      if (ans.toLowerCase() !== "yes") return true;
+    }
+
     cd(location);
     for (const item of items) {
       if (existsSync(item)) {
