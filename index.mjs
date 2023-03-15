@@ -46,10 +46,9 @@ for (const name of folders) {
   });
 }
 
-const backupLogs = [];
-const successLogs = [];
-
 async function link(items, location, name) {
+  const backupLogs = [];
+  const successLogs = [];
   await within(async () => {
     if (!existsSync(location)) return;
 
@@ -93,14 +92,13 @@ async function link(items, location, name) {
   } catch (e) {
     if (e.code === "EXDEV") {
       throw red("Cannot create symlink between tow partition! 🥲");
-    }
-
-    if (e.message.includes("are the same")) {
+    } else if (e.message.includes("same")) {
       echo(chalk.dim("You're trying to create backup for same file 😂"));
+    } else {
+      echo(chalk.red(e));
     }
-
-    echo(chalk.red(e));
   }
+  return { backupLogs, successLogs };
 }
 
 async function yesOrNo(text) {
@@ -121,7 +119,11 @@ for (const item of configurations) {
   }
   await within(async () => {
     cd(item.name);
-    await link(item.files, join(__dirname, item.location), item.name);
+    const logs = await link(
+      item.files,
+      join(__dirname, item.location),
+      item.name
+    );
   });
 }
 
@@ -129,18 +131,18 @@ function getTotal() {
   return configurations.reduce((a, v) => v.files.length + a, 0);
 }
 
-if (backupLogs.length > 0) {
-  echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
-  echo(backupLogs.join("\n"));
-  echo("");
-}
+// if (backupLogs.length > 0) {
+//   echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
+//   echo(backupLogs.join("\n"));
+//   echo("");
+// }
 
-if (configurations.length > 0) {
-  echo(
-    dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
-  );
+// if (configurations.length > 0) {
+//   echo(
+//     dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
+//   );
 
-  echo(successLogs.join("\n"));
-} else {
-  echo(yellow("There is no directory or file to create symlinks 🧬"));
-}
+//   echo(successLogs.join("\n"));
+// } else {
+//   echo(yellow("There is no directory or file to create symlinks 🧬"));
+// }
