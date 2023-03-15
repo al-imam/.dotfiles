@@ -1,3 +1,3 @@
-export default ({ ignore = "" } = {}) => {
-  return { ignore };
+export default ({ y = false }) => {
+  return { y };
 };

@@ -49,12 +49,11 @@ for (const name of folders) {
 const backupLogs = [];
 const successLogs = [];
 
-async function link(items, location) {
+async function link(items, location, name) {
   await within(async () => {
     if (!existsSync(location)) return;
 
     cd(location);
-
     for (const item of items) {
       if (existsSync(item)) {
         if (item.includes(path.sep)) {
@@ -92,7 +91,7 @@ async function link(items, location) {
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
-    await link(item.files, join(__dirname, item.location));
+    await link(item.files, join(__dirname, item.location), item.name);
   });
 }
 
