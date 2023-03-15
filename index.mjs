@@ -101,11 +101,17 @@ async function link(items, location, name) {
   return { backupLogs, successLogs };
 }
 
-async function yesOrNo(text) {
-  return await question(
-    `${text} ${dim("(" + chalk.underline("Yes") + "/No) ")}`,
+async function yesOrNo(text, selected = "Yes", not = "No") {
+  const ans = await question(
+    dim(`${text} (${chalk.underline(selected)}/${not}) `),
     { choices: ["Yes", "No"] }
   );
+
+  if (ans === "") {
+    return selected;
+  }
+
+  return ans;
 }
 
 for (const item of configurations) {
