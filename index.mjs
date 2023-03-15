@@ -88,6 +88,13 @@ async function link(items, location, name) {
   }
 }
 
+function yesOrNo(text) {
+  return question(
+    `${text} (${chalk.bold.underline("Yes")}/${chalk.dim("No")})`,
+    ["Yes", "No"]
+  );
+}
+
 for (const item of configurations) {
   await within(async () => {
     cd(item.name);
