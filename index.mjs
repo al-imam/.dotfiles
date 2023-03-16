@@ -54,10 +54,10 @@ async function link(items, location, name) {
   await within(async () => {
     if (!existsSync(location)) return;
 
-    if (!options.backup) {
+    if (!options.b) {
       const ans = await yesOrNo(
-        chalk.yellow(
-          `${chalk.blue(name)} files are already exist create backup ? `
+        chalk.cyan(
+          `${blueLight(name)} files are already exist create backup ? `
         )
       );
       if (ans.toLowerCase() !== "yes") return true;
@@ -95,7 +95,7 @@ async function link(items, location, name) {
     if (e.code === "EXDEV") {
       throw red("Cannot create symlink between tow partition! 🥲");
     } else if (e.message.includes("same")) {
-      echo(chalk.dim("You're trying to create backup for same file 😂"));
+      echo(chalk.dim("You're trying to forcedly replace same symlink 😂"));
     } else {
       echo(chalk.red(e));
     }
@@ -105,7 +105,7 @@ async function link(items, location, name) {
 
 async function yesOrNo(text, selected = "Yes", not = "No") {
   const ans = await question(
-    dim(`${text} (${chalk.underline(selected)}/${not}) `),
+    `${text} ${dim(`(${chalk.underline(selected)}/${not})`)} `,
     { choices: ["Yes", "No"] }
   );
 
@@ -119,9 +119,7 @@ async function yesOrNo(text, selected = "Yes", not = "No") {
 for (const item of configurations) {
   if (!options.y) {
     const ans = await yesOrNo(
-      chalk.cyan(
-        `do you want to create symlink for ${chalk.blueBright(item.name)} ?`
-      )
+      purple(`do you want to create symlink for ${blueLight(item.name)} ?`)
     );
     if (ans.toLowerCase() !== "yes") continue;
   }
@@ -136,23 +134,3 @@ for (const item of configurations) {
     if (successLogs.length > 0) echo(successLogs.join("\n"));
   });
 }
-
-function getTotal() {
-  return configurations.reduce((a, v) => v.files.length + a, 0);
-}
-
-// if (backupLogs.length > 0) {
-//   echo(dim(`Creating backup for ${backupLogs.length} files and directory! ♻️`));
-//   echo(backupLogs.join("\n"));
-//   echo("");
-// }
-
-// if (configurations.length > 0) {
-//   echo(
-//     dim(`Total ${configurations.length} directory and ${getTotal()} files 📌`)
-//   );
-
-//   echo(successLogs.join("\n"));
-// } else {
-//   echo(yellow("There is no directory or file to create symlinks 🧬"));
-// }
