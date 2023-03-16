@@ -1,3 +1,3 @@
 export default ({ y = false, b = false }) => {
-  return { y, b };
+  return { yes: y, backup: !b };
 };

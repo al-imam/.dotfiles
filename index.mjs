@@ -54,7 +54,7 @@ async function link(items, location, name) {
   await within(async () => {
     if (!existsSync(location)) return;
 
-    if (!options.b) {
+    if (!options.backup) {
       const ans = await yesOrNo(
         chalk.cyan(
           `${blueLight(name)} files are already exist create backup ? `
@@ -117,7 +117,7 @@ async function yesOrNo(text, selected = "Yes", not = "No") {
 }
 
 for (const item of configurations) {
-  if (!options.y) {
+  if (!options.yes) {
     const ans = await yesOrNo(
       purple(`do you want to create symlink for ${blueLight(item.name)} ?`)
     );
