@@ -1,1 +1,1 @@
-__home/bash
+$HOME

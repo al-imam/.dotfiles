@@ -127,7 +127,7 @@ for (const item of configurations) {
     cd(item.name);
     const { backupLogs, successLogs } = await link(
       item.files,
-      join(__dirname, item.location),
+      item.location,
       item.name
     );
     if (backupLogs.length > 0) echo(backupLogs.join("\n"));

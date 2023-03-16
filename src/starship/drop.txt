@@ -1,1 +1,1 @@
-__home/starship
+$HOME

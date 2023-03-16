@@ -1,1 +1,1 @@
-__home/git
+$HOME
