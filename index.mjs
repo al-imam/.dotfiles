@@ -109,7 +109,7 @@ async function yesOrNo(text, selected = "Yes", not = "No") {
     { choices: ["Yes", "No"] }
   );
 
-  if (ans === "") {
+  if (ans === "" || ["yes", "y", "Y"].includes(ans)) {
     return selected;
   }
 
