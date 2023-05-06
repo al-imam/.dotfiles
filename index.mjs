@@ -36,7 +36,7 @@ for (const name of folders) {
 
     configurations.push({
       files: files.filter((e) => e !== "drop.txt").map((e) => normalize(e)),
-      location: processPath(cat),
+      location: processPath(cat.trim()),
       name,
     });
   }).catch((fileProcessingError) => {
