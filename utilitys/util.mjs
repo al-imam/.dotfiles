@@ -5,15 +5,23 @@ import { join } from "path";
 const green = chalk.green;
 const yellow = chalk.yellow;
 
+async function recursiveBackup(path) {
+  await within(async () => {
+    cd(path)
+    const files = await listDirectoryAndFile();
+    for (const file of files) {
+      if (fs.lstatSync(file).isDirectory()) {
+        recursiveBackup(file)
+        continue
+      };
+      await backupFile(file);
+    }
+  })
+}
+
 export async function backupFolder(item, backup = `${item}.bak_${getTime()}`) {
-  await $`mkdir ${backup}`;
-
-  const files = await listDirectoryAndFile(item);
-
-  for (const file of files) {
-    if (fs.lstatSync(join(item, file)).isDirectory()) continue;
-    await backupFile(join(item, file), join(backup, file));
-  }
+  await $`mv ${item} ${backup}`;
+  recursiveBackup(backup)
   return [item, backup];
 }
 
