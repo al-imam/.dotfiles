@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "al-imam <alimam01828@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "setup": "zx index.mjs",
+    "setup-force": "zx index.mjs -y"
+  },
   "dependencies": {
     "lnk": "^1.1.0",
     "zx": "^7.2.0"

@@ -11,7 +11,7 @@ alias ls="ls $@ --format=vertical --group-directories-first -s --color=tty --ign
 alias reload="source ~/.bashrc"
 
 # count daily git commit's track work
-alias count="zx /w/zx/git-commit-count-by-day/script.mjs $@"
+alias count="zx /w/zx/git-commit-count-by-day/index.mjs $@"
 
 # go to dotfiles folder
 alias dotfiles="cd ~/dotfiles"
