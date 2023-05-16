@@ -1,17 +1,14 @@
 #!/usr/bin/env zx
 import "zx/globals";
 import symbolic from "./utilitys/symbolic.mjs";
-import { existsSync } from "fs";
 import { join, normalize } from "path";
 import getConfig from "./utilitys/getConfig.mjs";
 import processPath from "./utilitys/processPath.mjs";
-import { backupFile, backupFolder, showLogs } from "./utilitys/util.mjs";
 import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
 
 $.verbose = false;
 
-const { backup, blue, blueLight, dim, green, purple, red, yellow, yes } =
-  getConfig();
+const { transparent, accent, failed, primary } = getConfig();
 
 cd(normalize(join(__dirname, "src")));
 
@@ -34,17 +31,18 @@ for (const name of folders) {
     });
   }).catch((fileProcessingError) => {
     if (fileProcessingError.message === "empty") {
-      throw red(
+      throw failed(
         `No symlink location specified for src/${chalk.underline(name)} folder!`
       );
     }
-    throw red(fileProcessingError);
+
+    throw failed(fileProcessingError);
   });
 }
 
 async function yesOrNo(text, selected = "Yes", not = "No") {
   const ans = await question(
-    `${text} ${dim(`(${chalk.underline(selected)}/${not})`)} `,
+    `${text} ${transparent(`(${chalk.underline(selected)}/${not})`)} `,
     { choices: ["Yes", "No"] }
   );
 
@@ -58,7 +56,7 @@ async function yesOrNo(text, selected = "Yes", not = "No") {
 for (const item of configurations) {
   if (!yes) {
     const ans = await yesOrNo(
-      purple(`do you want to create symlink for ${blueLight(item.name)} ?`)
+      primary(`do you want to create symlink for ${accent(item.name)} ?`)
     );
     if (ans.toLowerCase() !== "yes") continue;
   }
