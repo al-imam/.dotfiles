@@ -1,6 +1,6 @@
 function getConfig({
   y = false,
-  b = false,
+  yes = false,
   success = "#69ff94",
   waring = "#f1fa8c",
   failed = "#ff6e6e",
@@ -10,8 +10,7 @@ function getConfig({
   accent = "#aa77ff",
 }) {
   return {
-    yes: y,
-    backup: !b,
+    yes: y || yes,
     waring: chalk.hex(waring),
     failed: chalk.hex(failed),
     success: chalk.hex(success),
