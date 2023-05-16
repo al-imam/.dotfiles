@@ -23,7 +23,7 @@ for (const name of folders) {
     cd(name);
 
     const files = await globby(".", { dot: true });
-    if (!files.includes("drop.txt")) return;
+    if (!files.includes("drop.txt")) throw new Error("empty");
 
     const { stdout: cat } = await $`cat ${files[files.indexOf("drop.txt")]}`;
 
@@ -34,7 +34,9 @@ for (const name of folders) {
     });
   }).catch((fileProcessingError) => {
     if (fileProcessingError.message === "empty") {
-      throw red(`drop file is empty in ${yellow(`src/${name}`)} directory! 😓`);
+      throw red(
+        `No symlink location specified for src/${chalk.underline(name)} folder!`
+      );
     }
     throw red(fileProcessingError);
   });
