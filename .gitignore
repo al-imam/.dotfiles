@@ -13,6 +13,11 @@ node_modules
 
 __*
 
+// ignore package manager
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
