@@ -5,10 +5,11 @@ import { join, normalize } from "path";
 import getConfig from "./utilitys/getConfig.mjs";
 import processPath from "./utilitys/processPath.mjs";
 import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
+import askBoolean from "./utilitys/askBoolean.mjs";
 
 $.verbose = false;
 
-const { transparent, accent, failed, primary } = getConfig();
+const { transparent, accent, failed, primary, yes } = getConfig();
 
 cd(normalize(join(__dirname, "src")));
 
@@ -20,6 +21,7 @@ for (const name of folders) {
     cd(name);
 
     const files = await globby(".", { dot: true });
+
     if (!files.includes("drop.txt")) throw new Error("empty");
 
     const { stdout: cat } = await $`cat ${files[files.indexOf("drop.txt")]}`;
@@ -29,37 +31,26 @@ for (const name of folders) {
       location: processPath(cat.trim()),
       name,
     });
-  }).catch((fileProcessingError) => {
-    if (fileProcessingError.message === "empty") {
+  }).catch((e) => {
+    if (e.message === "empty") {
       throw failed(
-        `No symlink location specified for src/${chalk.underline(name)} folder!`
+        `No symlink location specified for ${chalk.underline(name)} folder!`
       );
     }
 
-    throw failed(fileProcessingError);
+    throw failed(e);
   });
-}
-
-async function yesOrNo(text, selected = "Yes", not = "No") {
-  const ans = await question(
-    `${text} ${transparent(`(${chalk.underline(selected)}/${not})`)} `,
-    { choices: ["Yes", "No"] }
-  );
-
-  if (ans === "" || ["yes", "y", "Y"].includes(ans)) {
-    return selected;
-  }
-
-  return ans;
 }
 
 for (const item of configurations) {
   if (!yes) {
-    const ans = await yesOrNo(
+    const ans = await askBoolean(
       primary(`do you want to create symlink for ${accent(item.name)} ?`)
     );
-    if (ans.toLowerCase() !== "yes") continue;
+
+    if (!ans) continue;
   }
+
   await within(async () => {
     cd(item.name);
     const { backupLogs, successLogs } = await symbolic(
