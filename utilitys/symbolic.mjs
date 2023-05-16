@@ -3,7 +3,7 @@ import { existsSync } from "fs";
 import { backupFile, backupFolder, showLogs } from "./util.mjs";
 import getConfig from "./getConfig.mjs";
 
-const { backup, blue, blueLight, green, red } = getConfig();
+const { backup, success, accent, secondary, failed, transparent } = getConfig();
 
 async function symbolic(items, location, name) {
   const backupLogs = [];
@@ -13,9 +13,7 @@ async function symbolic(items, location, name) {
 
     if (!backup) {
       const ans = await yesOrNo(
-        chalk.cyan(
-          `${blueLight(name)} files are already exist create backup ? `
-        )
+        chalk.cyan(`${accent(name)} files are already exist create backup ? `)
       );
       if (ans.toLowerCase() !== "yes") return;
     }
@@ -42,22 +40,21 @@ async function symbolic(items, location, name) {
       log: (_1, _2, _3, r, f) => {
         if (Array.isArray(r)) {
           for (const l of r) {
-            const targets = green(l.replaceAll("\n", "").toLowerCase());
-            const directory = blue(f.replace(":", "").toLowerCase());
-            successLogs.push(blue(`📌 ${targets} -> ${directory}`));
+            const targets = success(l.replaceAll("\n", "").toLowerCase());
+            const directory = secondary(f.replace(":", "").toLowerCase());
+            successLogs.push(secondary(`📌 ${targets} -> ${directory}`));
           }
         }
       },
     });
   } catch (e) {
     if (e.code === "EXDEV") {
-      throw red("Cannot create symlink between tow partition! 🥲");
-    } else if (e.message.includes("same")) {
-      echo(chalk.dim("You're trying to forcedly replace same symlink 😂"));
-    } else {
-      echo(chalk.red(e));
+      throw failed("Cannot create symlink between tow partition! 🥲");
     }
+
+    throw failed(e);
   }
+
   return { backupLogs, successLogs };
 }
 

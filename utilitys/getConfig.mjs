@@ -18,7 +18,7 @@ function getConfig({
     transparent: chalk.dim,
     secondary: chalk.hex(secondary),
     primary: chalk.hex(primary),
-    blueLight: chalk.hex(accent),
+    accent: chalk.hex(accent),
     neutral: chalk.hex(neutral),
   };
 }
