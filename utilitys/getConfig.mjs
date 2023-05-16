@@ -1,14 +1,25 @@
-function getConfig({ y = false, b = false }) {
+function getConfig({
+  y = false,
+  b = false,
+  success = "#69ff94",
+  waring = "#f1fa8c",
+  failed = "#ff6e6e",
+  secondary = "#d6acff",
+  neutral = "#fff",
+  primary = "#ff92df",
+  accent = "#aa77ff",
+}) {
   return {
     yes: y,
     backup: !b,
-    yellow: chalk.yellow,
-    red: chalk.red,
-    green: chalk.green,
-    dim: chalk.dim,
-    blue: chalk.blue,
-    purple: chalk.hex("#ff92df"),
-    blueLight: chalk.hex("#aa77ff"),
+    waring: chalk.hex(waring),
+    failed: chalk.hex(failed),
+    success: chalk.hex(success),
+    transparent: chalk.dim,
+    secondary: chalk.hex(secondary),
+    primary: chalk.hex(primary),
+    blueLight: chalk.hex(accent),
+    neutral: chalk.hex(neutral),
   };
 }
 
