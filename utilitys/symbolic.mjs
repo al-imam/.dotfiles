@@ -2,23 +2,27 @@ import lnk from "lnk";
 import { existsSync } from "fs";
 import { backupFile, backupFolder, showLogs } from "./util.mjs";
 import getConfig from "./getConfig.mjs";
+import askBoolean from "./askBoolean.mjs";
 
-const { backup, success, accent, secondary, failed, transparent } = getConfig();
+const { backup, success, accent, secondary, failed } = getConfig();
 
 async function symbolic(items, location, name) {
   const backupLogs = [];
   const successLogs = [];
-  await within(async () => {
-    if (!existsSync(location)) return;
 
-    if (!backup) {
-      const ans = await yesOrNo(
+  await within(async () => {
+    if (!existsSync(location)) return true;
+
+    if (backup) {
+      const ans = await askBoolean(
         chalk.cyan(`${accent(name)} files are already exist create backup ? `)
       );
-      if (ans.toLowerCase() !== "yes") return;
+
+      if (!ans) return;
     }
 
     cd(location);
+
     for (const item of items) {
       if (existsSync(item)) {
         if (item.includes(path.sep)) {
