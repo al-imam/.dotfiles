@@ -3,25 +3,17 @@ import "zx/globals";
 import lnk from "lnk";
 import { existsSync } from "fs";
 import { join, normalize } from "path";
-import getOption from "./utilitys/option.mjs";
+import getConfig from "./utilitys/getConfig.mjs";
 import processPath from "./utilitys/processPath.mjs";
 import { backupFile, backupFolder, showLogs } from "./utilitys/util.mjs";
 import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
-import { clear } from "console";
 
 $.verbose = false;
 
-const options = getOption(argv);
+const { backup, blue, blueLight, dim, green, purple, red, yellow, yes } =
+  getConfig();
 
 cd(normalize(join(__dirname, "src")));
-
-const yellow = chalk.yellow;
-const red = chalk.red;
-const green = chalk.green;
-const dim = chalk.dim;
-const blue = chalk.blue;
-const purple = chalk.hex("#ff92df");
-const blueLight = chalk.hex("#aa77ff");
 
 const folders = await listDirectoryAndFile();
 const configurations = [];
@@ -41,7 +33,6 @@ for (const name of folders) {
       name,
     });
   }).catch((fileProcessingError) => {
-    console.log(fileProcessingError)
     if (fileProcessingError.message === "empty") {
       throw red(`drop file is empty in ${yellow(`src/${name}`)} directory! 😓`);
     }
@@ -55,7 +46,7 @@ async function link(items, location, name) {
   await within(async () => {
     if (!existsSync(location)) return;
 
-    if (!options.backup) {
+    if (!backup) {
       const ans = await yesOrNo(
         chalk.cyan(
           `${blueLight(name)} files are already exist create backup ? `
@@ -119,7 +110,7 @@ async function yesOrNo(text, selected = "Yes", not = "No") {
 }
 
 for (const item of configurations) {
-  if (!options.yes) {
+  if (!yes) {
     const ans = await yesOrNo(
       purple(`do you want to create symlink for ${blueLight(item.name)} ?`)
     );
