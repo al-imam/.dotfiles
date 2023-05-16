@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 import "zx/globals";
-import lnk from "lnk";
+import symbolic from "./utilitys/symbolic.mjs";
 import { existsSync } from "fs";
 import { join, normalize } from "path";
 import getConfig from "./utilitys/getConfig.mjs";
@@ -42,62 +42,6 @@ for (const name of folders) {
   });
 }
 
-async function link(items, location, name) {
-  const backupLogs = [];
-  const successLogs = [];
-  await within(async () => {
-    if (!existsSync(location)) return;
-
-    if (!backup) {
-      const ans = await yesOrNo(
-        chalk.cyan(
-          `${blueLight(name)} files are already exist create backup ? `
-        )
-      );
-      if (ans.toLowerCase() !== "yes") return true;
-    }
-
-    cd(location);
-    for (const item of items) {
-      if (existsSync(item)) {
-        if (item.includes(path.sep)) {
-          const log = await backupFolder(item.split(path.sep)[0]);
-          backupLogs.push(showLogs(log));
-          continue;
-        }
-        const log = await backupFile(item);
-        backupLogs.push(showLogs(log));
-      }
-    }
-  });
-
-  try {
-    await lnk(items, location, {
-      parents: true,
-      force: true,
-      type: "symbolic",
-      log: (_1, _2, _3, r, f) => {
-        if (Array.isArray(r)) {
-          for (const l of r) {
-            const targets = green(l.replaceAll("\n", "").toLowerCase());
-            const directory = blue(f.replace(":", "").toLowerCase());
-            successLogs.push(blue(`📌 ${targets} -> ${directory}`));
-          }
-        }
-      },
-    });
-  } catch (e) {
-    if (e.code === "EXDEV") {
-      throw red("Cannot create symlink between tow partition! 🥲");
-    } else if (e.message.includes("same")) {
-      echo(chalk.dim("You're trying to forcedly replace same symlink 😂"));
-    } else {
-      echo(chalk.red(e));
-    }
-  }
-  return { backupLogs, successLogs };
-}
-
 async function yesOrNo(text, selected = "Yes", not = "No") {
   const ans = await question(
     `${text} ${dim(`(${chalk.underline(selected)}/${not})`)} `,
@@ -120,7 +64,7 @@ for (const item of configurations) {
   }
   await within(async () => {
     cd(item.name);
-    const { backupLogs, successLogs } = await link(
+    const { backupLogs, successLogs } = await symbolic(
       item.files,
       item.location,
       item.name
