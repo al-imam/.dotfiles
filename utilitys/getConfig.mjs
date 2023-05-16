@@ -1,5 +1,5 @@
 function getConfig({ y = false, b = false }) {
-  return () => ({
+  return {
     yes: y,
     backup: !b,
     yellow: chalk.yellow,
@@ -9,7 +9,7 @@ function getConfig({ y = false, b = false }) {
     blue: chalk.blue,
     purple: chalk.hex("#ff92df"),
     blueLight: chalk.hex("#aa77ff"),
-  });
+  };
 }
 
-export default getConfig();
+export default () => getConfig(argv);
