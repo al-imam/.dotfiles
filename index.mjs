@@ -7,6 +7,7 @@ import getOption from "./utilitys/option.mjs";
 import processPath from "./utilitys/processPath.mjs";
 import { backupFile, backupFolder, showLogs } from "./utilitys/util.mjs";
 import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
+import { clear } from "console";
 
 $.verbose = false;
 
@@ -40,10 +41,10 @@ for (const name of folders) {
       name,
     });
   }).catch((fileProcessingError) => {
+    console.log(fileProcessingError)
     if (fileProcessingError.message === "empty") {
       throw red(`drop file is empty in ${yellow(`src/${name}`)} directory! 😓`);
     }
-
     throw red(fileProcessingError);
   });
 }
@@ -81,6 +82,7 @@ async function link(items, location, name) {
     await lnk(items, location, {
       parents: true,
       force: true,
+      type: "symbolic",
       log: (_1, _2, _3, r, f) => {
         if (Array.isArray(r)) {
           for (const l of r) {
