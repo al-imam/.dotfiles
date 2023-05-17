@@ -47,7 +47,9 @@ async function symbolic(items, location, name) {
       throw failed("Cannot create symlink between tow partition! 🥲");
     }
 
-    throw failed(e);
+    if (!e.message.includes("same")) {
+      throw failed(e);
+    }
   }
 
   return { backupLogs, successLogs };
