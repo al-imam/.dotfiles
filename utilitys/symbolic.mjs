@@ -5,6 +5,16 @@ import getConfig from "./getConfig.mjs";
 
 const { success, secondary, failed, backup } = getConfig();
 
+function formateLogs(files, move, callback) {
+  if (Array.isArray(files)) {
+    const directory = secondary(move.replace(":", "").toLowerCase());
+    for (const file of files) {
+      const targets = success(file.trim().toLowerCase());
+      callback(secondary(`📌 ${targets} -> ${directory}`));
+    }
+  }
+}
+
 async function symbolic(items, location, name) {
   const backupLogs = [];
   const successLogs = [];
@@ -32,15 +42,8 @@ async function symbolic(items, location, name) {
       parents: true,
       force: true,
       type: "symbolic",
-      log: (_1, _2, _3, r, f) => {
-        if (Array.isArray(r)) {
-          for (const l of r) {
-            const targets = success(l.replaceAll("\n", "").toLowerCase());
-            const directory = secondary(f.replace(":", "").toLowerCase());
-            successLogs.push(secondary(`📌 ${targets} -> ${directory}`));
-          }
-        }
-      },
+      log: (_1, _2, _3, r, f) =>
+        formateLogs(r, f, (log) => successLogs.push(log)),
     });
   } catch (e) {
     if (e.code === "EXDEV") {
