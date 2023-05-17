@@ -3,14 +3,14 @@ import { existsSync } from "fs";
 import { backupFile, backupFolder, showLogs } from "./util.mjs";
 import getConfig from "./getConfig.mjs";
 
-const { success, secondary, failed } = getConfig();
+const { success, secondary, failed, backup } = getConfig();
 
 async function symbolic(items, location, name) {
   const backupLogs = [];
   const successLogs = [];
 
   await within(async () => {
-    if (!existsSync(location)) return;
+    if (!existsSync(location) || !backup) return;
 
     cd(location);
 
