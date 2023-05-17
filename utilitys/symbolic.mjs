@@ -2,18 +2,9 @@ import lnk from "lnk";
 import { existsSync } from "fs";
 import { backupFile, backupFolder, showLogs } from "./util.mjs";
 import getConfig from "./getConfig.mjs";
+import formatLnkLog from "./formatLnkLog.mjs";
 
-const { success, secondary, failed, backup } = getConfig();
-
-function formateLogs(files, move, callback) {
-  if (Array.isArray(files)) {
-    const directory = secondary(move.replace(":", "").toLowerCase());
-    for (const file of files) {
-      const targets = success(file.trim().toLowerCase());
-      callback(secondary(`📌 ${targets} -> ${directory}`));
-    }
-  }
-}
+const { failed, backup } = getConfig();
 
 async function symbolic(items, location, name) {
   const backupLogs = [];
@@ -43,7 +34,7 @@ async function symbolic(items, location, name) {
       force: true,
       type: "symbolic",
       log: (_1, _2, _3, r, f) =>
-        formateLogs(r, f, (log) => successLogs.push(log)),
+        formatLnkLog(r, f, (log) => successLogs.push(log)),
     });
   } catch (e) {
     if (e.code === "EXDEV") {
