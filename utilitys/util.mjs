@@ -36,5 +36,5 @@ export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
 }
 
 export function showLogs(x) {
-  return messages.createLogs(x[0], x[1]);
+  return messages.createBackupLog(x[0], x[1]);
 }

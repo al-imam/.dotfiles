@@ -38,7 +38,7 @@ async function symbolic(items, location, name) {
         formatLnkLog(r, f, (log) => successLogs.push(log)),
     });
   } catch (e) {
-    if (e.code !== "EXDEV") {
+    if (e.code === "EXDEV") {
       throw messages.cannotCreateSymbolicLink;
     }
 
