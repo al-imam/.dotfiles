@@ -2,11 +2,15 @@
   "name": "dotfiles",
   "version": "0.1",
   "main": "index.js",
-  "author": "al-imam <alimam01828@gmail.com>",
+  "author": {
+    "email": "alimam01828@gmail.com",
+    "name": "al-imam",
+    "url": "https://www.github.com/al-imam"
+  },
   "license": "MIT",
   "scripts": {
-    "setup": "zx index.mjs",
-    "setup-force": "zx index.mjs -y"
+    "link": "zx index.mjs",
+    "link:force": "zx index.mjs -y"
   },
   "dependencies": {
     "lnk": "^1.1.0",
