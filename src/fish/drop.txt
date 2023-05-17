@@ -1,1 +1,1 @@
-$HOME/.dotfiles/__HOME/.config/fish
+$HOME/.config/fish
