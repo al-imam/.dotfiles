@@ -43,10 +43,7 @@ for (const name of folders) {
 
 for (const item of configurations) {
   if (!yes) {
-    const ans = await askBoolean(
-      primary(`do you want to create symlink for ${accent(item.name)} ?`)
-    );
-
+    const ans = await askBoolean(messages.createSymbolicLink(item.name));
     if (!ans) continue;
   }
 
