@@ -9,4 +9,7 @@ export default {
     ),
   createSymbolicLink: (name) =>
     primary(`do you want to create symlink for ${accent(name)} ?`),
+  cannotCreateSymbolicLink: failed(
+    "Cannot create symlink between tow partition! 🥲"
+  ),
 };

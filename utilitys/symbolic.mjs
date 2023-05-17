@@ -3,6 +3,7 @@ import { existsSync } from "fs";
 import { backupFile, backupFolder, showLogs } from "./util.mjs";
 import getConfig from "./getConfig.mjs";
 import formatLnkLog from "./formatLnkLog.mjs";
+import messages from "./messages.mjs";
 
 const { failed, backup } = getConfig();
 
@@ -37,8 +38,8 @@ async function symbolic(items, location, name) {
         formatLnkLog(r, f, (log) => successLogs.push(log)),
     });
   } catch (e) {
-    if (e.code === "EXDEV") {
-      throw failed("Cannot create symlink between tow partition! 🥲");
+    if (e.code !== "EXDEV") {
+      throw messages.cannotCreateSymbolicLink;
     }
 
     if (!e.message.includes("same")) {
