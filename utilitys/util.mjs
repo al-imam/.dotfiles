@@ -38,6 +38,5 @@ export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
 }
 
 export function showLogs(x) {
-  const [file, backup] = x;
-  return waring(`♻️  ${file} ${success("->")} ${backup}`);
+  return waring(`♻️  ${x[0]} ${success("->")} ${x[1]}`);
 }

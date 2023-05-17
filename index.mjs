@@ -6,6 +6,7 @@ import getConfig from "./utilitys/getConfig.mjs";
 import processPath from "./utilitys/processPath.mjs";
 import listDirectoryAndFile from "./utilitys/listDirectoryAndFile.mjs";
 import askBoolean from "./utilitys/askBoolean.mjs";
+import messages from "./utilitys/messages.mjs";
 
 $.verbose = false;
 
@@ -33,9 +34,7 @@ for (const name of folders) {
     });
   }).catch((e) => {
     if (e.message === "empty") {
-      throw failed(
-        `No symlink location specified for ${chalk.underline(name)} folder!`
-      );
+      throw messages.dropFileNotFound(name);
     }
 
     throw failed(e);
