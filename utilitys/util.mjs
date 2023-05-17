@@ -1,9 +1,7 @@
 import getTime from "./getTime.mjs";
 import listDirectoryAndFile from "./listDirectoryAndFile.mjs";
 import { lstatSync } from "fs";
-import getConfig from "./getConfig.mjs";
-
-const { success, waring } = getConfig();
+import messages from "./messages.mjs";
 
 async function recursiveBackup(path) {
   return await within(async () => {
@@ -38,5 +36,5 @@ export async function backupFile(item, backup = `${item}.bak_${getTime()}`) {
 }
 
 export function showLogs(x) {
-  return waring(`♻️  ${x[0]} ${success("->")} ${x[1]}`);
+  return messages.createLogs(x[0], x[1]);
 }

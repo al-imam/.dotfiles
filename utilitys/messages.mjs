@@ -1,6 +1,6 @@
 import getConfig from "./getConfig.mjs";
 
-const { failed, primary, accent } = getConfig();
+const { failed, primary, accent, waring, success } = getConfig();
 
 export default {
   dropFileNotFound: (name) =>
@@ -12,4 +12,6 @@ export default {
   cannotCreateSymbolicLink: failed(
     "Cannot create symlink between tow partition! 🥲"
   ),
+  createLogs: (file, destination) =>
+    waring(`♻️  ${file} ${success("->")} ${destination}`),
 };
