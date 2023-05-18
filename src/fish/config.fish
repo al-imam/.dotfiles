@@ -5,3 +5,9 @@ alias gc="zx /home/al-imam/work/zx/git-commit-count-by-day/index.mjs"
 alias dotfiles="cd ~/.dotfiles"
 
 starship init fish | source
+
+function fish_greeting
+  if command -sq screenfetch
+    screenfetch
+  end
+end
