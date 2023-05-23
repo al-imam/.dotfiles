@@ -24,3 +24,6 @@
 	logs = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%cr) %C(yellow)%d%Creset' --abbrev-commit
 	logs-long = log-short --stat
 	s = status -sb
+	b = branch
+	a = add
+	aa = add --all
