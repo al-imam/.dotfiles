@@ -7,7 +7,7 @@ alias dotfiles="cd ~/.dotfiles"
 starship init fish | source
 
 function fish_greeting
-  if command -sq screenfetch
-    screenfetch
+  if test -e $HOME/.dotfiles/resource/device-information-ubuntu
+    cat $HOME/.dotfiles/resource/device-information-ubuntu
   end
 end
