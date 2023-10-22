@@ -1,5 +1,11 @@
 # ~/.bashrc
 
+if [ -f ~/.dotfiles/resource/device-information-ubuntu ] 
+then
+  cat ~/.dotfiles/resource/device-information-ubuntu
+fi
+
+
 lsIgnoreRegex="{'[Nn][Tt][Uu][Ss][Ee][Rr]*',*'.BIN',*'.Bin','desktop.'*,'System Volume Information',*'.log.'*}"
 
 # format output in vertical order and ignore some system files and directories
