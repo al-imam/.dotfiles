@@ -7,6 +7,17 @@ alias dotfiles="cd ~/.dotfiles"
 # Update static
 alias update-static="screenfetch > ~/.dotfiles/resource/device-information-ubuntu"
 
+# rm command with trush
+alias rm='trash_or_rm'
+
+function trash_or_rm
+    if which trash >/dev/null
+        trash $argv
+    else
+        rm $argv
+    end
+end
+
 set PATH ~/.nvm/versions/node/v21.0.0/bin $PATH
 
 starship init fish | source

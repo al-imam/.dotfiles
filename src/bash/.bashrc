@@ -20,6 +20,19 @@ alias gc="zx ~/git-commit-count-by-day/index.mjs $@"
 # go to dotfiles folder
 alias dotfiles="cd ~/.dotfiles"
 
+
+trash_or_rm() {
+  if command -v trash > /dev/null 2>&1; then
+    trash "$@"
+  else
+    rm "$@"
+  fi
+}
+
+# rm command with trush
+alias rm='trash_or_rm'
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
