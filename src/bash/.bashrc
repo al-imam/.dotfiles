@@ -21,16 +21,29 @@ alias gc="zx ~/git-commit-count-by-day/index.mjs $@"
 alias dotfiles="cd ~/.dotfiles"
 
 
+# npm install --global trash-cli
 trash_or_rm() {
-  if command -v trash > /dev/null 2>&1; then
-    trash "$@"
+  message_warning="\033[0;31mWarning: 'trash' command not found. Files will be permanently deleted.\033[0m"
+  message_confirmation="Are you sure you want to permanently delete the file(s)? (y/n): "
+  message_canceled="Operation canceled."
+
+  if command -v trashd > /dev/null 2>&1; then
+    command trash "$@"
   else
-    rm "$@"
+    echo -e "$message_warning"
+    read -p "$message_confirmation" answer
+
+    if [ "${answer,,}" = "y" ] || [ "${answer,,}" = "yes" ]; then
+      command rm "$@"
+    else
+      echo "$message_canceled"
+    fi
   fi
 }
 
+
 # rm command with trush
-alias rm='trash_or_rm'
+alias rm="trash_or_rm"
 
 
 export NVM_DIR="$HOME/.nvm"
