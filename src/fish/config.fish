@@ -23,7 +23,7 @@ function trash_or_rm
         read -P $message_confirmation answer
 
         if test (string tolower $answer) = "y" -o (string tolower $answer) = "yes"
-            command rm $argv
+            command rm -v $argv
         else
             echo $message_canceled
         end

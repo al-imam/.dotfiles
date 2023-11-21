@@ -27,14 +27,14 @@ trash_or_rm() {
   message_confirmation="Are you sure you want to permanently delete the file(s)? (y/n): "
   message_canceled="Operation canceled."
 
-  if command -v trashd > /dev/null 2>&1; then
+  if command -v trash > /dev/null 2>&1; then
     command trash "$@"
   else
     echo -e "$message_warning"
     read -p "$message_confirmation" answer
 
     if [ "${answer,,}" = "y" ] || [ "${answer,,}" = "yes" ]; then
-      command rm "$@"
+      command rm -v "$@"
     else
       echo "$message_canceled"
     fi
