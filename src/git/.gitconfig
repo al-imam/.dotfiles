@@ -4,6 +4,7 @@
 
 [core]
 	editor = code --wait
+	eol = lf
 	autocrlf = false
 	whitespace = cr-at-eol
 	symlinks = true
