@@ -1,11 +1,5 @@
 # ~/.bashrc
 
-if [ -f ~/.dotfiles/resource/device-information-ubuntu ] 
-then
-  cat ~/.dotfiles/resource/device-information-ubuntu
-fi
-
-
 lsIgnoreRegex="{'[Nn][Tt][Uu][Ss][Ee][Rr]*',*'.BIN',*'.Bin','desktop.'*,'System Volume Information',*'.log.'*}"
 
 # format output in vertical order and ignore some system files and directories
@@ -40,6 +34,40 @@ trash_or_rm() {
     fi
   fi
 }
+
+if ! command -v open >/dev/null 2>&1; then
+  open() {
+    # Windows (Git Bash / MSYS / MINGW)
+    if command -v explorer.exe >/dev/null 2>&1; then
+      if [ -z "$1" ]; then
+        explorer.exe .
+      else
+        explorer.exe "$@"
+      fi
+      return 0
+    fi
+
+    # Linux (including WSL)
+    if command -v xdg-open >/dev/null 2>&1; then
+      if [ -z "$1" ]; then
+        xdg-open .
+      else
+        xdg-open "$@"
+      fi
+      return 0
+    fi
+
+    # macOS
+    if command -v open >/dev/null 2>&1; then
+      command open "$@"
+      return $?
+    fi
+
+    echo "open: no supported opener found" >&2
+    return 127
+  }
+fi
+
 
 
 # rm command with trush

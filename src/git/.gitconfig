@@ -3,7 +3,7 @@
 	name = al-imam
 
 [core]
-	editor = code --wait
+	editor = cursor --wait
 	eol = lf
 	autocrlf = false
 	whitespace = cr-at-eol
@@ -28,3 +28,5 @@
 	b = branch
 	a = add
 	aa = add --all
+[safe]
+	directory = *
