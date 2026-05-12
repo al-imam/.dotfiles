@@ -8,6 +8,8 @@
 	autocrlf = false
 	whitespace = cr-at-eol
 	symlinks = true
+	excludesfile = C:/Users/al_imam/.gitignore_global
+	longpaths = true
 
 [init]
 	defaultBranch = main
@@ -30,3 +32,5 @@
 	aa = add --all
 [safe]
 	directory = *
+[checkout]
+	defaultRemote = origin

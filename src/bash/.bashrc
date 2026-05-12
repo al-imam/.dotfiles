@@ -72,10 +72,15 @@ fi
 
 # rm command with trush
 alias rm="trash_or_rm"
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+alias cf='builtin cd'
+alias n='volta run --node'
+alias cd="z"
 
 eval "$(starship init bash)"
+
+# opencode
+export PATH=/c/Users/al_imam/.opencode/bin:$PATH
+export _ZO_DOCTOR=0
+
+
+eval "$(zoxide init bash)"
