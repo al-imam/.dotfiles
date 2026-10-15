@@ -1,6 +1,62 @@
 [tools]
+
 node = "lts"
 pnpm = "latest"
+bun = "latest"
+
+python = "latest"
+uv = "latest"
+
+gh = "latest"
+delta = "latest"
+difftastic = "latest"
+
+starship = "latest"
+zoxide = "latest"
+
+fd = "latest"
+ripgrep = "latest"
+fzf = "latest"
+jq = "latest"
+yq = "latest"
+bat = "latest"
+lsd = "latest"
+yazi = "latest"
+
+fastfetch = "latest"
+
+cmake = "latest"
+make = "latest"
+sqlite = "latest"
+
+cloudflared = "latest"
+usql = "latest"
+
+"npm:tsx" = "latest"
+"npm:@antfu/ni" = "latest"
+"npm:trash-cli" = "latest"
+
+"github:anthropics/claude-code" = "latest"
+"npm:@openai/codex" = "latest"
+
+"osv-scanner" = "latest"
+"github:SocketDev/sfw-free" = "latest"
+
+"npm:@playwright/cli" = "latest"
+"npm:chrome-devtools-mcp" = "latest"
+
+[settings]
+yes = true
+cache_prune_age = "7d"
+auto_install = false
+exec_auto_install = true
+not_found_auto_install = true
+
+[settings.npm]
+package_manager = "pnpm"
+
+[settings.python]
+compile = false
 
 [settings.self_update]
 auto = true

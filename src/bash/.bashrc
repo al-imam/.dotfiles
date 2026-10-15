@@ -63,9 +63,13 @@ alias cd="z"
 alias glm='claude --settings ~/.claude/settings.glm.json'
 alias claude='claude --dangerously-skip-permissions'
 
-# mise: interactive shells only; silently skipped on remote boxes without mise
+
+
 if [[ $- == *i* ]] && command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)"
+  _mise_bins="$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)/mise/installs"
+  export PATH="$_mise_bins/make/latest/Library/bin:$_mise_bins/sqlite/latest/Library/bin:$PATH"
+  unset _mise_bins
 fi
 
 eval "$(starship init bash)"
