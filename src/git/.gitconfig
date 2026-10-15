@@ -8,7 +8,7 @@
 	autocrlf = false
 	whitespace = cr-at-eol
 	symlinks = true
-	excludesfile = C:/Users/al_imam/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	longpaths = true
 
 [init]
@@ -38,7 +38,9 @@
 	defaultRemote = origin
 
 [credential "https://github.com"]
+    helper =
     helper = !~/scoop/apps/gh/current/bin/gh.exe auth git-credential
 
 [credential "https://gist.github.com"]
+    helper =
     helper = !~/scoop/apps/gh/current/bin/gh.exe auth git-credential
