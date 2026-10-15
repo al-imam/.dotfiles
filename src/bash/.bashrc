@@ -1,21 +1,5 @@
 # ~/.bashrc
 
-lsIgnoreRegex="{'[Nn][Tt][Uu][Ss][Ee][Rr]*',*'.BIN',*'.Bin','desktop.'*,'System Volume Information',*'.log.'*}"
-
-# format output in vertical order and ignore some system files and directories
-alias ls="ls $@ --format=vertical --group-directories-first -s --color=tty --ignore=$lsIgnoreRegex"
-
-# reload bash without exiting
-alias reload="source ~/.bashrc"
-
-# count daily git commit's track work
-alias gc="zx ~/git-commit-count-by-day/index.mjs $@"
-
-# go to dotfiles folder
-alias dotfiles="cd ~/.dotfiles"
-
-
-# npm install --global trash-cli
 trash_or_rm() {
   message_warning="\033[0;31mWarning: 'trash' command not found. Files will be permanently deleted.\033[0m"
   message_confirmation="Are you sure you want to permanently delete the file(s)? (y/n): "
@@ -37,7 +21,6 @@ trash_or_rm() {
 
 if ! command -v open >/dev/null 2>&1; then
   open() {
-    # Windows (Git Bash / MSYS / MINGW)
     if command -v explorer.exe >/dev/null 2>&1; then
       if [ -z "$1" ]; then
         explorer.exe .
@@ -47,7 +30,6 @@ if ! command -v open >/dev/null 2>&1; then
       return 0
     fi
 
-    # Linux (including WSL)
     if command -v xdg-open >/dev/null 2>&1; then
       if [ -z "$1" ]; then
         xdg-open .
@@ -57,7 +39,6 @@ if ! command -v open >/dev/null 2>&1; then
       return 0
     fi
 
-    # macOS
     if command -v open >/dev/null 2>&1; then
       command open "$@"
       return $?
@@ -68,19 +49,24 @@ if ! command -v open >/dev/null 2>&1; then
   }
 fi
 
-
-
-# rm command with trush
-alias rm="trash_or_rm"
-alias cf='builtin cd'
-alias n='volta run --node'
-alias cd="z"
-
-eval "$(starship init bash)"
-
-# opencode
-export PATH=/c/Users/al_imam/.opencode/bin:$PATH
 export _ZO_DOCTOR=0
 
+lsIgnoreRegex="{'[Nn][Tt][Uu][Ss][Ee][Rr]*',*'.BIN',*'.Bin','desktop.'*,'System Volume Information',*'.log.'*}"
 
+alias ls="ls $@ --format=vertical --group-directories-first -s --color=tty --ignore=$lsIgnoreRegex"
+alias reload="source ~/.bashrc"
+alias dotfiles="cd ~/.dotfiles"
+alias rm="trash_or_rm"
+alias cb='builtin cd'
+alias cd="z"
+
+alias glm='claude --settings ~/.claude/settings.glm.json'
+alias claude='claude --dangerously-skip-permissions'
+
+# mise: interactive shells only; silently skipped on remote boxes without mise
+if [[ $- == *i* ]] && command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate bash)"
+fi
+
+eval "$(starship init bash)"
 eval "$(zoxide init bash)"

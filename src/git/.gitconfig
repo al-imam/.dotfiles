@@ -3,7 +3,7 @@
 	name = al-imam
 
 [core]
-	editor = cursor --wait
+	editor = code --wait
 	eol = lf
 	autocrlf = false
 	whitespace = cr-at-eol
@@ -24,13 +24,21 @@
 	autoSetupRemote = true
 
 [alias]
-	logs = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%cr) %C(yellow)%d%Creset' --abbrev-commit
-	logs-long = log-short --stat
+	lp = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%cr) %C(yellow)%d%Creset' --abbrev-commit
+	ll = log-short --stat
 	s = status -sb
 	b = branch
 	a = add
 	aa = add --all
+
 [safe]
 	directory = *
+
 [checkout]
 	defaultRemote = origin
+
+[credential "https://github.com"]
+    helper = !~/scoop/apps/gh/current/bin/gh.exe auth git-credential
+
+[credential "https://gist.github.com"]
+    helper = !~/scoop/apps/gh/current/bin/gh.exe auth git-credential
