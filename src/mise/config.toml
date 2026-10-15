@@ -1,3 +1,6 @@
 [tools]
 node = "lts"
 pnpm = "latest"
+
+[settings.self_update]
+auto = true
