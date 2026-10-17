@@ -67,9 +67,9 @@ alias claude='claude --dangerously-skip-permissions'
 
 if [[ $- == *i* ]] && command -v mise >/dev/null 2>&1; then
   eval "$(mise activate bash)"
-  _mise_bins="$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)/mise/installs"
-  export PATH="$_mise_bins/make/latest/Library/bin:$_mise_bins/sqlite/latest/Library/bin:$PATH"
-  unset _mise_bins
+  _mise_root="$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)/mise"
+  export PATH="$_mise_root/shims:$_mise_root/installs/make/latest/Library/bin:$_mise_root/installs/sqlite/latest/Library/bin:$PATH"
+  unset _mise_root
 fi
 
 eval "$(starship init bash)"
