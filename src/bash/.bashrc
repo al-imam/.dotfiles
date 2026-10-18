@@ -66,9 +66,9 @@ alias claude='claude --dangerously-skip-permissions'
 
 
 if [[ $- == *i* ]] && command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate bash)"
+  eval "$(mise activate bash --shims)"
   _mise_root="$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)/mise"
-  export PATH="$_mise_root/shims:$_mise_root/installs/make/latest/Library/bin:$_mise_root/installs/sqlite/latest/Library/bin:$PATH"
+  export PATH="$_mise_root/installs/make/latest/Library/bin:$_mise_root/installs/sqlite/latest/Library/bin:$PATH"
   unset _mise_root
 fi
 
