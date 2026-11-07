@@ -2,6 +2,7 @@
 
 node = "lts"
 pnpm = "latest"
+yarn = "1.22.22"
 bun = "latest"
 
 python = "latest"
