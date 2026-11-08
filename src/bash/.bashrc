@@ -65,12 +65,14 @@ alias claude='claude --dangerously-skip-permissions'
 
 
 
-if [[ $- == *i* ]] && command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate bash --shims)"
-  _mise_root="$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)/mise"
-  export PATH="$_mise_root/installs/make/latest/Library/bin:$_mise_root/installs/sqlite/latest/Library/bin:$PATH"
+# mise: `mise activate bash --shims` emits Windows paths (C:\...) which break
+# bash's ':'-separated PATH on Git Bash, so add the shims dir ourselves.
+if command -v cygpath >/dev/null 2>&1 && [[ -n $LOCALAPPDATA ]]; then
+  _mise_root="$(cygpath -u "$LOCALAPPDATA")/mise"
+  export PATH="$_mise_root/shims:$_mise_root/installs/make/latest/Library/bin:$_mise_root/installs/sqlite/latest/Library/bin:$PATH"
   unset _mise_root
 fi
 
 eval "$(starship init bash)"
-eval "$(zoxide init bash)"
+# zoxide 0.10.0 on Windows emits `cygpath -w "\builtin pwd -L"` (missing $(...)); patch it.
+eval "$(zoxide init bash | sed 's|"\\builtin pwd -L"|"$(\\builtin pwd -L)"|')"
