@@ -5,3 +5,6 @@ swap=2GB
 dnsTunneling=true
 networkingMode=mirrored
 firewall=true
+
+[experimental]
+autoMemoryReclaim=dropCache
